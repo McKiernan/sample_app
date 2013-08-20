@@ -16,3 +16,9 @@
 *~
 *.swp
 *.swo
+.project
+.DS_Store
+.idea
+
+# Ignore bundles-stubs directory
+bundler-stubs/
