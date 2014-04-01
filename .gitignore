@@ -19,6 +19,8 @@
 .project
 .DS_Store
 .idea
+.tags
+.tags_sorted_by_file
 
 # Ignore bundles-stubs directory
 bundler-stubs/

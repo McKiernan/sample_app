@@ -161,6 +161,6 @@ input {
 }
 
 .field_with_errors {
-    @extern .control-group;
+    @exterd .control-group;
     @extend .error;
 }
