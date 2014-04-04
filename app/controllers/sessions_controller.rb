@@ -5,11 +5,11 @@ class SessionsController < ApplicationController
 		user = User.find_by(email: params[:session][:email].downcase)
 		if (user && user.authenticate(params[:session][:password]))
 			# Successful signin
-			flash[:success] = "Success"
+			flash.now[:success] = "Success"
 			render 'new'
 		else
 			# Failed to signin
-			flash[:error] = "Invalid email/password combination"
+			flash.now[:error] = "Invalid email/password combination"
 			render 'new'
 		end
 	end
