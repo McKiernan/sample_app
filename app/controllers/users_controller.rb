@@ -13,6 +13,7 @@ class UsersController < ApplicationController
         # Rails.logger = Logger.new(STDOUT)       
         # Rails.logger.debug("–––––––––"+ @user.description)
         if @user.save
+            sign_in @user
             flash[:success] = "Welcome to the Sample App!"
             redirect_to @user
         else
