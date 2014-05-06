@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 		if (user && user.authenticate(params[:session][:password]))
 			# Successful signin
 			sign_in user
-			redirect_to user
+			redirect_back_or user
 			flash.now[:success] = "Success"
 		else
 			# Failed to signin
