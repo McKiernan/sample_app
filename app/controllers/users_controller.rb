@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
  
+    before_action :signed_in_user, only: [:edit, :update]
+    before_action :correct_user, only: [:edit, :update]
+
     def show
         @user = User.find(params[:id])
     end
@@ -25,11 +28,13 @@ class UsersController < ApplicationController
     def edit
         # Rails.logger = Logger.new(STDOUT)
         # Rails.logger.debug("----Params: " + params.inspect)
-        @user = User.find(params[:id])
+        #This is already set from correct_user, through the before filter
+        #@user = User.find(params[:id])
     end
 
     def update
-        @user = User.find(params[:id])
+        #This is already set from correct_user, through the before filter
+        #@user = User.find(params[:id]) 
         Rails.logger = Logger.new(STDOUT)
         # Rails.logger.debug("----Params: " + params.inspect)
         # Rails.logger.debug("----User: " + @user.inspect)
@@ -48,5 +53,22 @@ class UsersController < ApplicationController
  
     def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    # Before filters
+
+    def signed_in_user
+        # redirect_to signin_url, notice: "Please sign in." unless signed_in?
+        # This is equivalent to
+        unless signed_in?
+            store_location
+            flash[:notice] = "Please sign in."
+            redirect_to signin_url
+        end
+    end
+
+    def correct_user
+        @user = User.find(params[:id])
+        redirect_to root_url, notice: "Unauthorized access" unless current_user?(@user)
     end
 end
