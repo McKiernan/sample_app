@@ -48,7 +48,16 @@ end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.5'
 
+# Generate sample users
 gem 'faker', '1.1.2'
+
+#Pagination
+gem 'will_paginate', '3.0.4'
+
+# Bootstrap pagination
+gem 'bootstrap-will_paginate', '0.0.9'
+
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
