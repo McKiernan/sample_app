@@ -143,6 +143,45 @@ describe "User pages" do
         specify { expect(user.reload.name).to eq new_name }
         specify { expect(user.reload.email).to eq new_email }  
       end
+    
+      describe "forbidden attributes" do
+
+        let(:params) do
+          { user: { admin: true, password: user.password, 
+            password_confirmation: user.password } }
+          end
+
+          before do
+          
+          puts "START OF DEBUG"
+          Rails.logger = Logger.new(STDOUT)
+          Rails.logger.debug "Loggin admin status"
+          Rails.logger.debug user.admin?
+          
+          puts "END OF DEBUG"
+            sign_in user, no_capybara: true
+            patch user_path(user), params
+            user.reload
+            puts "Did reload"
+            Rails.logger.debug user.admin?
+          end
+
+
+          specify { expect(user.reload).not_to be_admin }
+      # @u = FactoryGirl.create(:user)
+      #@u.toggle!(:admin)
+       #Rails.logger.debug @user.email.inspect
+            #Rails.logger.debug @user.email.to_yaml
+       #puts @user.admin.to_yaml
+
+      # let(:user) { FactoryGirl.create(:user) }
+      # :user.update_attribute(:admin, 1)
+      # before { patch users_path(:user) }
+      # :user.reload
     end
+
+
+    end
+
   end
 end

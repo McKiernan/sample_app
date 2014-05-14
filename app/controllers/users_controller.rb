@@ -51,10 +51,11 @@ class UsersController < ApplicationController
         # Rails.logger.debug("----User: " + @user.inspect)
 
         if @user.update_attributes(user_params)
-            Rails.logger.info(" %%%%%%%%%%%%%%%%User update successfully")
+            # Rails.logger.info(" %%%%%%%%%%%%%%%%User update successfully")
             flash[:success] = "Profile updated"
             redirect_to @user
         else
+            puts "Failed to update"
             Rails.logger.info(@user.errors.messages.inspect)
             render 'edit'
         end
@@ -73,6 +74,7 @@ class UsersController < ApplicationController
         # redirect_to signin_url, notice: "Please sign in." unless signed_in?
         # This is equivalent to
         unless signed_in?
+            puts "Not signed in"
             store_location
             flash[:notice] = "Please sign in."
             redirect_to signin_url
