@@ -77,7 +77,6 @@ describe 'Authentication' do
 						it "should render the desired protected page" do
 							expect(page).to have_title(user.name)
 						end
-
 					end
 				end
 			end
