@@ -132,4 +132,30 @@ describe User do
         before { @user.save }
         its(:remember_token) { should_not be_blank }
     end
+
+    # Micropost tests
+
+    describe "micropost associations" do
+        before { @user.save }
+        let!(:older_micropost) do
+            FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+        end
+        let!(:newer_micropost) do
+            FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+        end
+
+        it "should have the right microposts in the right order" do
+            expect(@user.microposts.first).to eq newer_micropost 
+            expect(@user.microposts.to_a).to eq [newer_micropost, older_micropost] 
+        end
+
+        it "should destroy microposts if the user is deleted" do
+            microposts = @user.microposts.to_a #Make a copy of the objects, since the ActiveRecord collection would be immediately cleared if the user is removed
+            @user.destroy
+            expect(microposts).not_to be_empty
+            microposts.each do |post|
+                expect(Micropost.where(id: post.id)).to be_empty
+            end
+        end
+    end
 end
