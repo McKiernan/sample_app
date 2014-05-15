@@ -19,7 +19,8 @@ describe "User pages" do
       before(:all) { 30.times { FactoryGirl.create(:user) } }
       after(:all) { User.delete_all } 
 
-      it { should have_selector('div.pagination') }
+      it { should have_selector("div.pagination") }
+      #it { should have_css('div.pagination') }
 
       it "should list each user" do
         User.paginate(page: 1).each do |user|
@@ -117,15 +118,15 @@ describe "User pages" do
     before do  
       sign_in user
       visit edit_user_path(user) 
-      puts(user)
-      puts edit_user_path(user)
+      #puts(user)
+      #puts edit_user_path(user)
     end
 
     describe "page" do
       it { should have_content("Update your profile") }
       it { should have_title("Edit user") }
       it { should have_content("Sign out") }
-      it { should have_link('change', href: "http:/gravatar.com/emails") }
+      it { should have_link('change', href: "http://gravatar.com/emails") }
     end
 
     describe "with invalid information" do
@@ -141,7 +142,7 @@ describe "User pages" do
           fill_in "Name",                    with: new_name
           fill_in "Email",                   with: new_email
           fill_in "Password",                with: user.password
-          fill_in "Password confirmation",   with: user.password
+          fill_in "Confirmation",   with: user.password
           click_button "Save changes"
         end
 

@@ -17,6 +17,27 @@ describe "StaticPages" do
         let(:page_title) { '' }
         it_should_behave_like "all static pages"
         it { should_not have_title('| Home') }
+
+        describe "for signed-in users" do
+            let(:user) { FactoryGirl.create(:user) }
+                let!(:older_micropost) do
+                 FactoryGirl.create(:micropost, user: user, created_at: 1.day.ago)
+                end
+                let!(:newer_micropost) do
+                    FactoryGirl.create(:micropost, user: user, created_at: 1.hour.ago)
+                end
+            before do 
+                sign_in user
+                visit root_path
+            end
+            it "should show the users posts" do
+                user.feed.each do |item|
+                    expect(page).to have_css("li##{item.id}", text: item.content)
+                end
+            end
+
+
+        end
     end
 
   #Test the Help Page
