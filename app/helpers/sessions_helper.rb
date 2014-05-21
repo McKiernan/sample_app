@@ -20,7 +20,18 @@ module SessionsHelper
 	end
 
 	def current_user?(user)
-		user == @current_user
+		puts "CHECKING CURRENT USER"
+		puts user.name
+		if(@current_user.nil?)
+			puts "Current user is nil"
+		end
+		if (user == @current_user) 
+			puts "yes"
+		else
+			puts "no"
+		end
+
+		user == current_user
 	end	
 
 	def signed_in?
@@ -43,7 +54,7 @@ module SessionsHelper
 		session[:return_to] = request.url if request.get?
 	end
 
-	 def signed_in_user
+	def signed_in_user
         # redirect_to signin_url, notice: "Please sign in." unless signed_in?
         # This is equivalent to
         unless signed_in?
@@ -51,6 +62,8 @@ module SessionsHelper
             store_location
             flash[:notice] = "Please sign in."
             redirect_to signin_url
+        else 
+        	puts "User is signed in"
         end
     end
 end
